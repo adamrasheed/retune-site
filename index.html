@@ -1,0 +1,181 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retune — a preset-first guitar tuner for iOS</title>
+<meta name="description" content="A guitar tuner organized around the tunings you use — Standard, Drop D, Esus2, DADGAD and more. Select a preset, play a string, tune to the target.">
+<meta property="og:title" content="Retune — a preset-first guitar tuner">
+<meta property="og:description" content="Your alternate tunings as presets. Select one, play a string, tune to the target. iOS, in development.">
+<meta property="og:type" content="website">
+<style>
+  :root{
+    --bg:#0b0b0c; --panel:#141416; --panel-2:#1b1b1e;
+    --text:#ededee; --muted:#8b8b92; --line:#28282d;
+    --accent:#3ecf8e; --flat:#5b8def; --sharp:#e0913f;
+    --maxw:940px;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: light){
+    :root{
+      --bg:#fbfbfa; --panel:#ffffff; --panel-2:#f3f3f1;
+      --text:#161619; --muted:#6a6a70; --line:#e4e4e0; --accent:#0f9d63;
+    }
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:var(--sans);
+    line-height:1.55; -webkit-font-smoothing:antialiased; font-size:16px}
+  a{color:inherit}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px}
+
+  .eyebrow{font-family:var(--mono); font-size:12.5px; letter-spacing:.08em;
+    text-transform:uppercase; color:var(--muted); display:flex; align-items:center; gap:9px}
+  .eyebrow::before{content:""; width:7px; height:7px; background:var(--accent); display:inline-block}
+
+  /* HERO — left aligned, asymmetric */
+  header{border-bottom:1px solid var(--line)}
+  .hero{padding:70px 0 56px; display:grid; grid-template-columns:1.15fr .85fr; gap:48px; align-items:center}
+  @media (max-width:760px){.hero{grid-template-columns:1fr; gap:36px; padding:48px 0 44px}}
+  h1{font-size:clamp(32px,5.4vw,52px); line-height:1.06; letter-spacing:-.025em;
+    font-weight:750; margin:18px 0 0; max-width:15ch}
+  .sub{color:var(--muted); font-size:clamp(16px,2vw,18px); margin:20px 0 0; max-width:46ch}
+  .cta{display:flex; gap:12px; flex-wrap:wrap; margin-top:30px}
+  .btn{font-family:var(--sans); font-weight:600; font-size:14.5px; text-decoration:none;
+    padding:11px 18px; border-radius:2px; border:1px solid var(--line); background:transparent;
+    color:var(--text); transition:border-color .12s, background .12s}
+  .btn.primary{background:var(--accent); border-color:var(--accent); color:#04150d}
+  @media (prefers-color-scheme: light){.btn.primary{color:#fff}}
+  .btn:not(.primary):hover{border-color:var(--text)}
+
+  /* METER — rectangular, technical */
+  .meter{border:1px solid var(--line); background:var(--panel); border-radius:2px; padding:22px}
+  .meter .row{display:flex; align-items:baseline; justify-content:space-between}
+  .meter .note{font-family:var(--sans); font-size:44px; font-weight:750; letter-spacing:-.02em; line-height:1}
+  .meter .note b{color:var(--muted); font-weight:600; font-size:20px; margin-left:2px}
+  .meter .readout{font-family:var(--mono); font-size:12.5px; color:var(--accent)}
+  .track{position:relative; height:44px; margin-top:18px; border:1px solid var(--line); background:var(--panel-2); border-radius:2px; overflow:hidden}
+  .track .tick{position:absolute; top:0; bottom:0; width:1px; background:var(--line)}
+  .track .mid{background:var(--muted); opacity:.55}
+  .track .needle{position:absolute; top:0; bottom:0; width:2px; background:var(--accent);
+    animation:settle 5s ease-in-out infinite}
+  @keyframes settle{0%{left:24%;background:var(--flat)}22%{left:73%;background:var(--sharp)}
+    52%{left:41%;background:var(--sharp)}80%,100%{left:50%;background:var(--accent)}}
+  .track .scale{position:absolute; inset:auto 8px 5px; display:flex; justify-content:space-between;
+    font-family:var(--mono); font-size:10.5px; color:var(--muted)}
+
+  /* FEATURES — bordered list, monospace index, no icons */
+  section{padding:56px 0; border-bottom:1px solid var(--line)}
+  .sec-head{font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted); margin-bottom:26px}
+  .feats{display:grid; grid-template-columns:1fr 1fr; gap:0; border-top:1px solid var(--line); border-left:1px solid var(--line)}
+  @media (max-width:640px){.feats{grid-template-columns:1fr}}
+  .feat{padding:24px; border-right:1px solid var(--line); border-bottom:1px solid var(--line)}
+  .feat .idx{font-family:var(--mono); font-size:12px; color:var(--accent)}
+  .feat h3{font-size:17px; font-weight:650; margin:10px 0 7px; letter-spacing:-.01em}
+  .feat p{margin:0; color:var(--muted); font-size:14.5px}
+
+  /* TUNINGS — sharp, monospace data */
+  .tunings{display:grid; grid-template-columns:repeat(auto-fill,minmax(190px,1fr)); gap:0;
+    border-top:1px solid var(--line); border-left:1px solid var(--line)}
+  .tuning{padding:14px 16px; border-right:1px solid var(--line); border-bottom:1px solid var(--line)}
+  .tuning .n{font-size:14.5px; font-weight:600}
+  .tuning .v{font-family:var(--mono); font-size:12.5px; color:var(--muted); margin-top:3px; letter-spacing:.02em}
+  .note-line{color:var(--muted); font-size:14px; margin-top:20px}
+
+  footer{padding:38px 0 56px; color:var(--muted); font-size:13.5px}
+  footer a{color:var(--accent); text-decoration:none}
+  footer .brand{font-weight:650; color:var(--text)}
+</style>
+</head>
+<body>
+
+<header>
+  <div class="wrap">
+    <div class="hero">
+      <div>
+        <div class="eyebrow">iOS · in development</div>
+        <h1>A guitar tuner organized around the tunings you use.</h1>
+        <p class="sub">Standard, Drop&nbsp;D, Esus2, DADGAD and the rest live as presets.
+          Pick one, play a string, and the tuner tracks the target you're aiming for.</p>
+        <div class="cta">
+          <a class="btn primary" href="mailto:adamrasheed91@gmail.com?subject=Retune%20launch&body=Let%20me%20know%20when%20Retune%20ships.">Get an email at launch</a>
+          <a class="btn" href="#features">What it does</a>
+        </div>
+      </div>
+
+      <div class="meter" aria-hidden="true">
+        <div class="row">
+          <div class="note">E<b>2</b></div>
+          <div class="readout">−0.0 cents · locked</div>
+        </div>
+        <div class="track">
+          <div class="tick mid" style="left:50%"></div>
+          <div class="tick" style="left:25%"></div>
+          <div class="tick" style="left:75%"></div>
+          <div class="needle"></div>
+          <div class="scale"><span>flat</span><span>sharp</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</header>
+
+<section id="features">
+  <div class="wrap">
+    <div class="sec-head">What it does</div>
+    <div class="feats">
+      <div class="feat">
+        <div class="idx">01</div>
+        <h3>Tracks the string you're playing</h3>
+        <p>Play any string and the tuner locks to the nearest target in the preset, then holds
+          it steady while you adjust — no jumping between notes as you get close.</p>
+      </div>
+      <div class="feat">
+        <div class="idx">02</div>
+        <h3>Alternate tunings, already set up</h3>
+        <p>Ten tunings built in — standard, dropped, and open. Switch between them in a tap
+          instead of re-entering notes every time.</p>
+      </div>
+      <div class="feat">
+        <div class="idx">03</div>
+        <h3>Runs entirely on device</h3>
+        <p>No account, no network, no tracking. It opens straight to the tuner and works
+          anywhere, including offline.</p>
+      </div>
+      <div class="feat">
+        <div class="idx">04</div>
+        <h3>Reads in cents</h3>
+        <p>A cents meter plus a short haptic the moment a string lands in tune — within five
+          cents of the target.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section>
+  <div class="wrap">
+    <div class="sec-head">Included at launch — custom tunings planned</div>
+    <div class="tunings">
+      <div class="tuning"><div class="n">Standard</div><div class="v">E A D G B E</div></div>
+      <div class="tuning"><div class="n">Drop D</div><div class="v">D A D G B E</div></div>
+      <div class="tuning"><div class="n">Drop C</div><div class="v">C G C F A D</div></div>
+      <div class="tuning"><div class="n">Half-step down</div><div class="v">E♭ standard</div></div>
+      <div class="tuning"><div class="n">Whole-step down</div><div class="v">D standard</div></div>
+      <div class="tuning"><div class="n">Esus2 open</div><div class="v">E B E F♯ B E</div></div>
+      <div class="tuning"><div class="n">Open G</div><div class="v">D G D G B D</div></div>
+      <div class="tuning"><div class="n">Open D</div><div class="v">D A D F♯ A D</div></div>
+      <div class="tuning"><div class="n">DADGAD</div><div class="v">D A D G A D</div></div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <span class="brand">Retune</span> — a preset-first guitar tuner for iOS.<br>
+    Independent project, not affiliated with Apple. <a href="mailto:adamrasheed91@gmail.com">adamrasheed91@gmail.com</a>
+  </div>
+</footer>
+
+</body>
+</html>
