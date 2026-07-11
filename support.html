@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Retune — Support</title>
+<meta name="description" content="Support and help for Retune, a preset-first guitar tuner for iOS.">
+<style>
+  :root{
+    --bg:#0b0b0c; --text:#ededee; --muted:#8b8b92; --line:#28282d; --accent:#3ecf8e;
+    --sans:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    --mono:ui-monospace,"SF Mono",SFMono-Regular,Menlo,Consolas,monospace;
+  }
+  @media (prefers-color-scheme: light){
+    :root{ --bg:#fbfbfa; --text:#161619; --muted:#6a6a70; --line:#e4e4e0; --accent:#0f9d63; }
+  }
+  *{box-sizing:border-box}
+  body{margin:0; background:var(--bg); color:var(--text); font-family:var(--sans);
+    line-height:1.6; -webkit-font-smoothing:antialiased}
+  .wrap{max-width:680px; margin:0 auto; padding:56px 24px 80px}
+  .eyebrow{font-family:var(--mono); font-size:12.5px; letter-spacing:.08em; text-transform:uppercase; color:var(--muted)}
+  h1{font-size:clamp(26px,5vw,36px); letter-spacing:-.02em; margin:12px 0 4px}
+  .lead{font-size:18px; color:var(--muted); margin:8px 0 32px}
+  h2{font-size:18px; margin:30px 0 8px; letter-spacing:-.01em}
+  p{margin:0 0 12px}
+  a{color:var(--accent); text-decoration:none}
+  .qa{border-top:1px solid var(--line); padding-top:18px; margin-top:18px}
+  .muted{color:var(--muted)}
+  .btn{display:inline-block; margin-top:8px; font-weight:600; font-size:15px;
+    padding:11px 18px; border:1px solid var(--line); border-radius:2px; color:var(--text); text-decoration:none}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="eyebrow">Retune</div>
+  <h1>Support</h1>
+  <p class="lead">A preset-first guitar tuner for iOS.</p>
+
+  <p>The fastest way to reach me is email — I read every message.</p>
+  <a class="btn" href="mailto:adamrasheed91@gmail.com?subject=Retune%20support">Email support</a>
+
+  <div class="qa">
+    <h2>The tuner isn't hearing my guitar</h2>
+    <p>Retune needs microphone access. Check <strong>Settings → Retune → Microphone</strong> is
+    on, and play close to the phone in a quiet-ish room.</p>
+  </div>
+
+  <div class="qa">
+    <h2>How do I change tuning?</h2>
+    <p>Tap the tuning name at the top (e.g. "Standard ⌄") and pick from the list — Drop D,
+    DADGAD, open tunings, and more.</p>
+  </div>
+
+  <div class="qa">
+    <h2>Can I add my own custom tuning?</h2>
+    <p>Not yet — custom presets are planned for a future update. v1 ships with the built-in
+    tunings.</p>
+  </div>
+
+  <div class="qa muted">
+    <p>Retune is an independent project, not affiliated with Apple. ·
+    <a href="privacy.html">Privacy</a> · <a href="index.html">Home</a></p>
+  </div>
+</div>
+</body>
+</html>
