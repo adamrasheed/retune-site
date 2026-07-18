@@ -6,8 +6,9 @@
 <title>Retune: a preset-first guitar tuner for iOS</title>
 <meta name="description" content="A guitar tuner organized around the tunings you use: Standard, Drop D, Esus2, DADGAD and more. Select a preset, play a string, tune to the target.">
 <meta property="og:title" content="Retune: a preset-first guitar tuner">
-<meta property="og:description" content="Your alternate tunings as presets. Select one, play a string, tune to the target. iOS, in development.">
+<meta property="og:description" content="Your alternate tunings as presets. Select one, play a string, tune to the target. Free on the App Store.">
 <meta property="og:type" content="website">
+<meta name="apple-itunes-app" content="app-id=6789782801">
 <style>
   :root{
     --bg:#0b0b0c; --panel:#141416; --panel-2:#1b1b1e;
@@ -48,6 +49,13 @@
   .btn.primary{background:var(--accent); border-color:var(--accent); color:#04150d}
   @media (prefers-color-scheme: light){.btn.primary{color:#fff}}
   .btn:not(.primary):hover{border-color:var(--text)}
+
+  /* App Store badge: official artwork, do not restyle. 44px tall (min 40px);
+     surrounding whitespace and the 12px flex gap exceed the required
+     quarter-height (11px) clear space */
+  .store-badge{display:inline-block; line-height:0}
+  .store-badge img{display:block; height:44px; width:auto}
+  .cta{align-items:center}
 
   /* METER: rectangular, technical */
   .meter{border:1px solid var(--line); background:var(--panel); border-radius:2px; padding:22px}
@@ -94,12 +102,14 @@
   <div class="wrap">
     <div class="hero">
       <div>
-        <div class="eyebrow">iOS · in development</div>
+        <div class="eyebrow">iOS · free on the App Store</div>
         <h1>A guitar tuner organized around the tunings you use.</h1>
         <p class="sub">Standard, Drop&nbsp;D, Esus2, DADGAD and the rest live as presets.
           Pick one, play a string, and the tuner tracks the target you're aiming for.</p>
         <div class="cta">
-          <a class="btn primary" href="mailto:adamrasheed91@gmail.com?subject=Retune%20launch&body=Let%20me%20know%20when%20Retune%20ships.">Get an email at launch</a>
+          <a class="store-badge" href="https://apps.apple.com/us/app/retune-guitar-tuner/id6789782801">
+            <img src="app-store-badge.svg" alt="Download on the App Store" height="44">
+          </a>
           <a class="btn" href="#features">What it does</a>
         </div>
       </div>
@@ -155,7 +165,7 @@
 
 <section>
   <div class="wrap">
-    <div class="sec-head">Included at launch. Custom tunings planned</div>
+    <div class="sec-head">Nine tunings included. Custom tunings planned</div>
     <div class="tunings">
       <div class="tuning"><div class="n">Standard</div><div class="v">E A D G B E</div></div>
       <div class="tuning"><div class="n">Drop D</div><div class="v">D A D G B E</div></div>
@@ -172,8 +182,10 @@
 
 <footer>
   <div class="wrap">
-    <span class="brand">Retune</span>. A preset-first guitar tuner for iOS.<br>
-    Independent project, not affiliated with Apple. <a href="mailto:adamrasheed91@gmail.com">adamrasheed91@gmail.com</a>
+    <span class="brand">Retune</span>. A preset-first guitar tuner for iOS.
+    Free on the <a href="https://apps.apple.com/us/app/retune-guitar-tuner/id6789782801">App&nbsp;Store</a>.<br>
+    Apple is a trademark of Apple Inc. App&nbsp;Store is a service mark of Apple Inc.
+    <a href="mailto:adamrasheed91@gmail.com">adamrasheed91@gmail.com</a>
   </div>
 </footer>
 

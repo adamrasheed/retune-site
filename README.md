@@ -1,13 +1,15 @@
 # Retune — marketing site
 
 A single static `index.html` (no build step, no dependencies) for the Retune landing page,
-hosted free on **GitHub Pages**.
+hosted on **Vercel** (Creatix team) at tryretune.com.
 
-## Before you publish
-Edit `index.html` and replace the placeholders:
-- `you@example.com` → your real contact email (appears in the "Notify me" button + footer).
-- Swap the working name **Retune** once you finalize it (search-and-replace the word).
-- When the app is live, change the hero "Notify me" button to an **App Store** link.
+## App is live
+Retune shipped on the App Store on 2026-07-17:
+https://apps.apple.com/us/app/retune-guitar-tuner/id6789782801 (app id `6789782801`).
+The hero uses Apple's official "Download on the App Store" black badge
+(`app-store-badge.svg`, from Apple's marketing tools; per the guidelines: don't restyle,
+min 40px tall, quarter-height clear space, one badge per layout). Pages also carry a
+`apple-itunes-app` meta tag for Safari's Smart App Banner.
 
 ## Deploy to GitHub Pages (free, ~3 minutes)
 1. Create a **new public repo** on GitHub named `retune-site`.
